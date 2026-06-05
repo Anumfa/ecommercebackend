@@ -9,8 +9,7 @@ if (dns.setDefaultResultOrder) {
     dns.setDefaultResultOrder('ipv4first');
 }
 
-// Set DNS servers to Cloudflare DNS which often handles SRV records better
-dns.setServers(['1.1.1.1', '1.0.0.1']);
+// Removed manual DNS servers to prevent ECONNREFUSED
 
 import app from './app.js';
 import connectDB from './Config/db.js';

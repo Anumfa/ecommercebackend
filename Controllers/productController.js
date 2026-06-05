@@ -12,9 +12,9 @@ export const createProduct = async (req, res) => {
             discount = parseFloat(discount.replace('%', ''));
         }
 
-        // Check if files are present and at least 3
-        if (!req.files || req.files.length < 3) {
-            return res.status(400).json({ success: false, message: 'At least 3 images are required for a new product' });
+        // Check if files are present
+        if (!req.files || req.files.length < 1) {
+            return res.status(400).json({ success: false, message: 'At least 1 image is required for a new product' });
         }
 
         // Upload images to Cloudinary
@@ -120,11 +120,8 @@ export const updateProduct = async (req, res) => {
         if (size) updateData.size = parseArrayField(size);
         if (color) updateData.color = parseArrayField(color);
 
-        // If new images are uploaded, enforce the "at least 3" rule if replacing
+        // If new images are uploaded
         if (req.files && req.files.length > 0) {
-            if (req.files.length < 3) {
-                return res.status(400).json({ success: false, message: 'If uploading new images, at least 3 images are required' });
-            }
             const uploadPromises = req.files.map(file => uploadToCloudinary(file.buffer, 'products'));
             const uploadResults = await Promise.all(uploadPromises);
             updateData.images = uploadResults.map(result => result.secure_url);

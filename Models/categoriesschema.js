@@ -9,7 +9,11 @@ const categorySchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         required: [true, 'Please provide an image URL']
-    }
+    },
+    subcategories: [{
+        type: String,
+        trim: true
+    }]
 }, {
     timestamps: true
 });

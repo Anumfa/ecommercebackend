@@ -5,6 +5,16 @@ import { uploadToCloudinary } from '../Utils/uploadimage.js';
 export const createCategory = async (req, res) => {
     try {
         const { name } = req.body;
+        
+        let subcategories = [];
+        if (req.body.subcategories) {
+            try {
+                subcategories = JSON.parse(req.body.subcategories);
+            } catch (e) {
+                subcategories = Array.isArray(req.body.subcategories) ? req.body.subcategories : [req.body.subcategories];
+            }
+        }
+
         // With upload.any(), files are in req.files
         const file = req.files ? req.files[0] : null;
 
@@ -14,6 +24,7 @@ export const createCategory = async (req, res) => {
         
         const newCategory = await Category.create({
             name,
+            subcategories,
             imageUrl: result.secure_url
         });
 
@@ -53,7 +64,16 @@ export const updateCategory = async (req, res) => {
         const { id } = req.params;
         const { name } = req.body;
         
-        let updateData = { name };
+        let subcategories = [];
+        if (req.body.subcategories) {
+            try {
+                subcategories = JSON.parse(req.body.subcategories);
+            } catch (e) {
+                subcategories = Array.isArray(req.body.subcategories) ? req.body.subcategories : [req.body.subcategories];
+            }
+        }
+        
+        let updateData = { name, subcategories };
 
         const file = req.files ? req.files[0] : null;
         if (file) {
