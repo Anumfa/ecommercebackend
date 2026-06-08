@@ -8,6 +8,7 @@ import productRouter from './Routes/productRouter.js';
 import authRouter from './Routes/authRouter.js';
 import cartRouter from './Routes/cartRouter.js';
 import wishlistRouter from './Routes/wishlistRouter.js';
+import orderRouter from './Routes/orderRouter.js';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/product', productRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/wishlist', wishlistRouter);
+app.use('/api/order', orderRouter);
 
 // Default Route
 app.get('/', (req, res) => {
